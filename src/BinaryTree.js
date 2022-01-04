@@ -172,31 +172,7 @@ class BinaryTree {
     // Single frame for the addValue animation
     // Arguments match addValueVisual
     addValueFrame(value, complete, ...callbackArgs) {
-        if(!this.node.isFilled()) {
-            this.addValue(value);          // Add the value to the data structure
-
-            this.node.paint(Node.SUCCESS); // Mark this node as inserted
-
-            this.draw();                   // Show the tree with the new value
-
-            this.stopAnimation(complete, ...callbackArgs);
-
-        } else {
-            this.node.paint(Node.VISITED); // Mark this node as visited
-
-            this.updateDrawing();          // Display the new color
-
-            // Determine the node for the next frame
-            if(value < this.node.value) {
-                this.node = this.node.leftNode;
-
-            } else if(value > this.node.value) {
-                this.node = this.node.rightNode;
-            }
-
-            // Schedule the next frame, passing in all arguments for the next call
-            this.continueAnimation(this.addValueFrame, value, complete, ...callbackArgs)
-        }
+       
     }
 
     // Call for starting the search animation
@@ -210,59 +186,7 @@ class BinaryTree {
     // Single frame for the search animatino
     // Arugment match serchVisual
     searchFrame(value, complete, ...callbackArgs) {
-        if(this.node.color !== Node.VISITED) {
-            // Mark the root node as visited first, then continue the search
-            this.root.paint(Node.VISITED);
-
-            this.updateDrawing();
-
-            this.continueAnimation(this.searchFrame, value, complete, ...callbackArgs);
-
-        } else if(!this.node.isFilled()) {
-            // The value isn't in the tree, stop the animation
-
-            this.stopAnimation(complete, ...callbackArgs);
-
-        } else if(this.node.value === value) {
-            // The value is in this node
-
-            this.node.paint(Node.SUCCESS);  // Mark the node as found
-
-            this.updateDrawing();           // Display the new color
-
-            this.stopAnimation(complete, ...callbackArgs);
-
-        } else {
-            // The value may be in another node
-
-            var nextHalf; // The half of the tree being searched next
-            var cutHalf;  // The hal of the tree that can be cut from search
-
-            // Set the two variables correctly
-            if(value < this.node.value) {
-                nextHalf = this.node.leftNode;
-                cutHalf = this.node.rightNode;
-
-            } else if(value > this.node.value) {
-                nextHalf = this.node.rightNode;
-                cutHalf = this.node.leftNode;
-            }
-
-            // Set the node for the next frame
-            this.node = nextHalf;
-
-            // Mark the half of the tree the node is not in, draw it
-            cutHalf.recursivePaint(Node.FAILURE);
-            cutHalf.draw();
-
-            // Mark the next node as visited
-            nextHalf.paint(Node.VISITED);
-
-            // Display all the changes
-            this.updateDrawing();
-
-            this.continueAnimation(this.searchFrame, value, complete, ...callbackArgs);
-        }
+     
     }
 
     // Call for starting the fill animation
@@ -279,20 +203,5 @@ class BinaryTree {
     // filled is the number of nodes added so far
     // complete is a callback called when the animation finishes
     fillFrame(count, filled, complete) {
-        if(filled === count) {
-            // Stop the animation if the correct number of nodes were inserted
-            this.stopAnimation(complete);
-        } else {
-            // Temporarily stop the fill animation to start the addValue animation
-            this.stopAnimation();
-
-            var value = this.uniqueRandom(count);
-
-            // Start the addValue animation, calling this frame again when the
-            // animation is complete, and incrementing the number of nodes
-            // filled so far
-            this.startAnimation(this.addValueFrame, value,
-                this.fillFrame.bind(this), count, filled + 1, complete);
-        }
-    }
+      
 }
