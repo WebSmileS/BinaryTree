@@ -3,16 +3,16 @@
 class Node {
     // Note: this section uses the static keyword to define static properties.
   
-    static SIZE = 20;                    // Diameter of the nodes
-    static COLOR = color(255, 255, 255); // Fill color of the nodes
+    static SIZE = 30;                    // Diameter of the nodes
+    static COLOR = color(200, 200, 200); // Fill color of the nodes
     static STROKE = color(0, 0, 0, 0);   // Outline color of the nodes
-    static TEXTSIZE = 10;                // Text size of the node values
+    static TEXTSIZE = 15;                // Text size of the node values
     static TEXTCOLOR = color(0, 0, 0);   // Text color of the node values
     static EDGECOLOR = color(0, 0, 0);   // Color of this node's upper edge
     static EDGETHICKNESS = 2;            // Thickness this node's upper edge
 
     // Color-related constants for visualization purposes
-    static VISITED = color(0, 0, 255);  // Color when this node has been visited
+    static VISITED = color(50, 150, 200);  // Color when this node has been visited
     static SUCCESS = color(0, 255, 0);  // Color when this node was added/the
                                         //   value inside was being searched for
     static FAILURE = color(255, 0, 0);  // Color when the value being searched
