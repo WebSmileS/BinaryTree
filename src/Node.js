@@ -78,69 +78,7 @@ class Node {
    
     addValue(value) {
         
-        if (!this.isFilled()) {
-            // If the node hasn't been filled yet, fill this node with the value
-            // This node needs to have its coordinates set, to return this
-
-            this.value = value;
-            this.leftNode = new Node(this.graphicsBuffer, this);
-            this.rightNode = new Node(this.graphicsBuffer, this);
-
-            return this;
-
-        } else if (value < this.value) {
-            // The value is less than this node's value, so it belongs to the left
-
-            var initialLeftSpacing = this.leftNode.cumulativeRightSpacing
-                + Node.HORIZONTALSPACING;
-
-            // Add this value to the left half of the tree
-            var shiftedNode = this.leftNode.addValue(value);
-
-            // To prevent overlapping nodes, the left child should be offset
-            // slightly farther to the left than all the space taken up to the
-            // right of the left node
-            this.leftSpacing = this.leftNode.cumulativeRightSpacing
-                + Node.HORIZONTALSPACING;
-
-            // Update total spacing taken up to the left of this node
-            this.cumulativeLeftSpacing = this.leftNode.cumulativeLeftSpacing
-                + this.leftSpacing;
-
-            // If this node's left spacing changed, then the coordinates of its
-            // left child must be updated to account for this change, so return
-            // the left child
-            if(this.leftSpacing !== initialLeftSpacing) {
-                return this.leftNode;
-            }
-
-            // If the left spacing didn't change, return the lower node that
-            // needs to be adjusted
-            return shiftedNode;
-
-        } else if(value > this.value){
-            // The value is greater than this node's value, so it belongs to the left
-
-            // The code below parallels the code above, but handles adding nodes
-            // to the right half of this node
-
-            var rightSpacing = this.rightNode.cumulativeLeftSpacing
-                + Node.HORIZONTALSPACING;
-
-            var shiftedNode = this.rightNode.addValue(value);
-
-            this.rightSpacing = this.rightNode.cumulativeLeftSpacing
-                + Node.HORIZONTALSPACING;
-
-            this.cumulativeRightSpacing = this.rightNode.cumulativeRightSpacing
-                + this.rightSpacing;
-
-            if(this.rightSpacing !== rightSpacing) {
-                return this.rightNode;
-            }
-
-            return shiftedNode;
-        }
+      
     }
 
     deleteValue(value){
@@ -149,26 +87,26 @@ class Node {
 
         if(value === this.value){
             this.value=null;
-            // console.log(this.leftNode.value,this.rightNode.value);
-            // if(this.leftNode.value!==null&&this.rightNode.value!==null){
-            //     console.log('both');
-            //     this.value=this.leftNode.value;
-            //     this.leftNode=this.leftNode.leftNode;
-            //     this.rightNode=this.leftNode.rightNode;
-            //     return this.leftNode;
-            // }else if(this.leftNode.value!==null){
-            //     console.log('left');
-            //     this.value=this.leftNode.value;
-            //     this.leftNode=this.leftNode.leftNode;
-            //     this.rightNode=this.leftNode.rightNode;
-            //     return this.leftNode;
-            // }else if(this.rightNode.value!==null){
-            //     this.value=this.rightNode.value;
-            //     this.leftNode=this.rightNode.leftNode;
-            //     this.rightNode=this.rightNode.rightNode;
-            //     console.log('right');
-            //     return this.rightNode;
-            // }
+            console.log(this.leftNode.value,this.rightNode.value);
+            if(this.leftNode.value!==null&&this.rightNode.value!==null){
+                console.log('both');
+                this.value=this.leftNode.value;
+                this.leftNode=this.leftNode.leftNode;
+                this.rightNode=this.leftNode.rightNode;
+                return this.leftNode;
+            }else if(this.leftNode.value!==null){
+                console.log('left');
+                this.value=this.leftNode.value;
+                this.leftNode=this.leftNode.leftNode;
+                this.rightNode=this.leftNode.rightNode;
+                return this.leftNode;
+            }else if(this.rightNode.value!==null){
+                this.value=this.rightNode.value;
+                this.leftNode=this.rightNode.leftNode;
+                this.rightNode=this.rightNode.rightNode;
+                console.log('right');
+                return this.rightNode;
+            }
             return undefined;  
             
         } else if (value<this.value){
